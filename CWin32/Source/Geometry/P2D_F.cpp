@@ -9,8 +9,17 @@ P2D_F::P2D_F(const P2D_F &src_p2d) noexcept
     }
 }
 
+P2D_F::P2D_F(const P2D_F &&src_p2d)
+{
+    if(&src_p2d)
+    {
+        x = src_p2d.x;
+        y = src_p2d.y;
+    }
+}
+
 P2D_F::P2D_F(float x, float y)
 {
-    P2D_F::x = x;
-    P2D_F::y = y;
+    this->x = x;
+    this->y = y;
 }

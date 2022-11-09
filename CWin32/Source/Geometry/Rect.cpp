@@ -13,8 +13,8 @@
 Rect::Rect(const Rect &src_rect) noexcept
 {
     m_Center = src_rect.m_Center;    
-    m_Origin = new P2D_F(*src_rect.m_Origin);
-    m_Rect = new RECT(*src_rect.m_Rect);
+    *m_Origin = *src_rect.m_Origin;
+    *m_Rect = *src_rect.m_Rect;
 
     LOGSTR("Copied!");
 }
@@ -22,8 +22,8 @@ Rect::Rect(const Rect &src_rect) noexcept
 Rect::Rect(Rect &&src_rect)
 {
     m_Center = src_rect.m_Center;
-    m_Origin = src_rect.m_Origin;
-    m_Rect = src_rect.m_Rect;
+    m_Origin = std::move(src_rect.m_Origin);
+    m_Rect = std::move(src_rect.m_Rect);
 
     src_rect.m_Center = 0;
     src_rect.m_Origin = nullptr;
@@ -35,8 +35,10 @@ Rect::Rect(Rect &&src_rect)
 Rect::Rect(const RECT &src_rect)
 {
     m_Center = 0;
-    m_Origin = new P2D_F((float)src_rect.left, (float)src_rect.top);
-    m_Rect = new RECT(src_rect);
+
+    m_Origin->x = (float)src_rect.left;
+    m_Origin->y =(float)src_rect.top;
+    *m_Rect = src_rect;
 
     LOGSTR("Copied RECT!");
 }
@@ -44,8 +46,11 @@ Rect::Rect(const RECT &src_rect)
 Rect::Rect(RECT *src_rect)
 {
     m_Center = 0;
-    m_Origin = new P2D_F((float)src_rect->left, (float)src_rect->top);
-    m_Rect = src_rect;
+
+    m_Origin->x = (float)src_rect->left;
+    m_Origin->y = (float)src_rect->top;
+
+    *m_Rect = std::move(*src_rect);
 
     src_rect = nullptr;
 
@@ -55,8 +60,11 @@ Rect::Rect(RECT *src_rect)
 Rect::Rect(const RECT &&src_rect)
 {
     m_Center = 0;
-    m_Origin = new P2D_F((float)src_rect.left, (float)src_rect.top);
-    m_Rect = new RECT(src_rect);
+
+    m_Origin->x = std::move((float)src_rect.left);
+    m_Origin->y = std::move((float)src_rect.top);
+
+    *m_Rect = std::move(src_rect);
 
     LOGSTR("Created by RECT rvalue!");
 }
@@ -64,13 +72,14 @@ Rect::Rect(const RECT &&src_rect)
 Rect::Rect(float x, float y, float width, float height)
 {
     m_Center = 0.0f;
-    m_Origin = new P2D_F(x, y);
     
-    m_Rect = new RECT();
+    m_Origin->x = x;
+    m_Origin->y = y;
+    
     m_Rect->left = (long)x;
     m_Rect->top = (long)y;
-    m_Rect->right = (long)width;
-    m_Rect->bottom = (long)height; 
+    m_Rect->right = (long)(width + x);
+    m_Rect->bottom = (long)(height + y); 
 
     LOGSTR("Created!");
 }
@@ -78,25 +87,23 @@ Rect::Rect(float x, float y, float width, float height)
 Rect::Rect(const P2D_F &src_p2d, float width, float height)
 {
     m_Center = 0;
-    m_Origin = new P2D_F(src_p2d);
-    m_Rect = new RECT();
+    *m_Origin = src_p2d;
 
     m_Rect->left = (long)m_Origin->x;
     m_Rect->top = (long)m_Origin->y;
-    m_Rect->right = (long)width;
-    m_Rect->bottom = (long)height;
+    m_Rect->right = (long)(width + m_Rect->left);
+    m_Rect->bottom = (long)(height + m_Rect->right);
 }
 
 Rect::Rect(const P2D_F &&src_p2d, float width, float height)
 {
     m_Center = 0;
-    m_Origin = new P2D_F(src_p2d);
-    m_Rect = new RECT();
+    *m_Origin = std::move(src_p2d);
 
     m_Rect->left = (long)m_Origin->x;
     m_Rect->top = (long)m_Origin->y;
-    m_Rect->right = (long)width;
-    m_Rect->bottom = (long)height; 
+    m_Rect->right = (long)(width + m_Rect->left);
+    m_Rect->bottom = (long)(height + m_Rect->right);
 
     LOGSTR("Created by P2D_F rvalue!");
 }
