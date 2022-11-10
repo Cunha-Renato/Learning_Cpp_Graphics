@@ -77,6 +77,26 @@ void Window::createWindowObj()
     m_Window_Class.lpszClassName = m_Name;
 }
 
+//Registers this window
+void Window::regWindow()
+{
+    m_Window_Handle = CreateWindowExW
+    (
+        0,
+        m_Window_Class.lpszClassName, 
+        m_Title, 
+        WS_OVERLAPPEDWINDOW|WS_VISIBLE, 
+        CW_USEDEFAULT, 
+        CW_USEDEFAULT, 
+        CW_USEDEFAULT, 
+        CW_USEDEFAULT, 
+        NULL, 
+        NULL, 
+        m_Instance, 
+        NULL
+    );
+}
+
 void Window::MainLoop() 
 {
     MSG message;
@@ -102,26 +122,6 @@ void Window::MainLoop()
     }
 }
 
-//Registers this window
-void Window::regWindow()
-{
-    m_Window_Handle = CreateWindowExW
-    (
-        0,
-        m_Window_Class.lpszClassName, 
-        m_Title, 
-        WS_OVERLAPPEDWINDOW|WS_VISIBLE, 
-        CW_USEDEFAULT, 
-        CW_USEDEFAULT, 
-        CW_USEDEFAULT, 
-        CW_USEDEFAULT, 
-        NULL, 
-        NULL, 
-        m_Instance, 
-        NULL
-    );
-}
-
 //Public functions
 
 void Window::setActiveScene(Scene *scn)
@@ -131,6 +131,7 @@ void Window::setActiveScene(Scene *scn)
     if(!m_Scene->hasGraphics())
         m_Scene->setGraphics(new Graphics(m_Window_Handle));
     
+    m_Scene->init();
 }
 
 void Window::run()

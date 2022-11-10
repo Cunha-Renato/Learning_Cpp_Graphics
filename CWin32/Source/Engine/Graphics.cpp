@@ -54,6 +54,11 @@ void Graphics::drawLine(float x1, float y1, float x2, float y2)
     m_Render_Target->DrawLine(D2D1::Point2F(x1, y1), D2D1::Point2F(x2, y2), m_Brush);
 }
 
+void Graphics::fillRect(const D2D1_RECT_F &rect)
+{
+    m_Render_Target->FillRectangle(rect, m_Brush);
+}
+
 void Graphics::paintBackground(float r, float g, float b)
 {
     m_Render_Target->Clear(D2D1::ColorF(r, g, b));

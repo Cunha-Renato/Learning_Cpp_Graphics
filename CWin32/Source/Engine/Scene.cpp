@@ -1,4 +1,5 @@
 #include "..\..\Headers\Engine\Scene.h"
+#include <iostream>
 
 int Scene::m_Instances = 0;
 bool Scene::m_Has_Graphics = false;
@@ -19,5 +20,5 @@ Scene::~Scene()
 
 void Scene::setGraphics(Graphics *gfx)
 {
-    m_Graphics = gfx;
+    m_Graphics = std::move(gfx);
 }

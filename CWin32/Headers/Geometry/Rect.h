@@ -4,22 +4,27 @@
 #include <d2d1.h>
 #include "P2D_F.h"
 
+//TODO: Finish implementing the calculation for the center
 class Rect
 {
     private:
         float m_Center = 0;
+        float m_Width = 0;
+        float m_Height = 0;
         P2D_F *m_Origin = new P2D_F();
-        RECT *m_Rect = new RECT;
+        D2D1_RECT_F *m_Rect = new D2D1_RECT_F;
+
+        void update();
 
     public:
         Rect() = default;
         Rect(const Rect &src_rect) noexcept;
 
         //Will set de provided pointer to nullptr
-        Rect(RECT *src_rect);
+        Rect(D2D1_RECT_F *src_rect);
         Rect(Rect &&src_rect);
-        Rect(const RECT &src_rect);
-        Rect(const RECT &&src_rect);
+        Rect(const D2D1_RECT_F &src_rect);
+        Rect(const D2D1_RECT_F &&src_rect);
 
         Rect(float x, float y, float width, float height);
         Rect(const P2D_F &src_p2d, float width, float height);
@@ -35,7 +40,6 @@ class Rect
             std::cout << "Assignment "<<std::endl;
             return *this;
         }
-
         Rect& operator=(Rect &&src_rect)
         {
             if(&src_rect == this) return *this; 
@@ -53,7 +57,14 @@ class Rect
             return *this;
         }   
 
+        //Seters
+        //TODO: Do all the other setters, but not now
+        void setOrigin(float x, float y);
+        void setOrigin(const P2D_F &src_p2d);
+        void setOrigin(P2D_F &&src_p2d);
+        void setRect(float x, float y, float width, float height);
+
         float getCenter() {return m_Center;}
         P2D_F getOrigin() {return *m_Origin;}
-        RECT getRect() {return *m_Rect;}
+        const D2D1_RECT_F getRect() {return *m_Rect;}
 };

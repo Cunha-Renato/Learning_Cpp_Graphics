@@ -16,6 +16,8 @@ class Scene
         virtual ~Scene();
         static void setGraphics(Graphics *gfx);
         static bool hasGraphics() {return m_Has_Graphics;}
+
+        virtual void init() = 0;
         virtual void update() = 0;
         virtual void render() = 0;
 

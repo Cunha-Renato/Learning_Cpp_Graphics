@@ -21,8 +21,9 @@ class Graphics
 
         RECT* getRect() {return &m_Rect;}
 
-        void paintBackground(float r, float g, float b);
         void drawLine(float x1, float y1, float x2, float y2);
+        void fillRect(const D2D1_RECT_F &rect);
+        void paintBackground(float r, float g, float b);
         void beginDraw() {m_Render_Target->BeginDraw();}
         void endDraw() {m_Render_Target->EndDraw();}
 };
