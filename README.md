@@ -1,5 +1,5 @@
 # Learning_Cpp_Graphics
-My learning experience with win32 and C++ graphics.
+Learning win32 and C++ graphics, to eventually make PONG.
 
 # Libraries
 user32.lib, 
