@@ -6,7 +6,8 @@
 class Scene01 : public Scene
 {
     private:
-        bool m_Up = false;
+        bool m_Move = false;
+        bool m_MoveUp = false;
         RECT* m_Rect = nullptr;
         Rect m_Player;
 
@@ -16,4 +17,5 @@ class Scene01 : public Scene
         void init();
         void update();
         void render();
+        void input(bool wasDown, bool isDown, long keyCode);
 };

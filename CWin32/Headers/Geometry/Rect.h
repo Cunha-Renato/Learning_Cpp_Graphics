@@ -67,4 +67,11 @@ class Rect
         float getCenter() {return m_Center;}
         P2D_F getOrigin() {return *m_Origin;}
         const D2D1_RECT_F getRect() {return *m_Rect;}
+        float getXOrigin() {return m_Origin->x;}
+        float getYOrigin() {return m_Origin->y;}
+        float getHeight() {return m_Height;}
+        float getWidth() {return m_Width;}
+
+        void moveX(float val);
+        void moveY(float val);
 };

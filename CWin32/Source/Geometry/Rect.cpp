@@ -180,3 +180,16 @@ void Rect::update()
     m_Rect->right = (m_Rect->left + m_Width);
     m_Rect->bottom = (m_Rect->top + m_Height);
 }
+
+void Rect::moveX(float val)
+{
+    m_Origin->x+=val;
+
+    update();
+}
+void Rect::moveY(float val)
+{
+    m_Origin->y+=val;
+
+    update();
+}

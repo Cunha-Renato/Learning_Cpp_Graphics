@@ -10,6 +10,13 @@
 #define LOGSTR(x)
 #endif
 
+WNDCLASSW Window::m_Window_Class = {0};
+HWND Window::m_Window_Handle = nullptr;
+HINSTANCE Window::m_Instance = nullptr;
+LPCWSTR Window::m_Name = {0};
+LPCWSTR Window::m_Title = {0};
+Scene* Window::m_Scene = nullptr;
+
 Window::Window(HINSTANCE instance, LPCWSTR class_name, LPCWSTR title) 
 {
     // LOGSTR("Constructor!");
@@ -27,14 +34,22 @@ Window::Window(HINSTANCE instance, LPCWSTR class_name, LPCWSTR title)
 //Private functions
 //
 //This function acts upon windows messages
-LRESULT CALLBACK windowProc(HWND window, UINT message, WPARAM wParam, LPARAM lParam) 
+LRESULT CALLBACK Window::windowProc(HWND window, UINT message, WPARAM wParam, LPARAM lParam) 
 {
     LRESULT result=0;
     switch(message)
     {
-        case WM_SIZE:
+        case WM_SYSKEYDOWN:
+        case WM_SYSKEYUP:
+        case WM_KEYDOWN:
+        case WM_KEYUP:
         {
-            // LOGSTR("WM_SIZE\n");
+            uint32_t vkCode = (uint32_t)wParam;
+            bool wasDown = ((lParam & (1<<30)) != 0);
+            bool isDown = ((lParam & (1<<31)) == 0);
+
+            m_Scene->input(wasDown, isDown, vkCode);
+            
             break;
         }
 

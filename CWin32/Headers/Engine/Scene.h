@@ -20,6 +20,7 @@ class Scene
         virtual void init() = 0;
         virtual void update() = 0;
         virtual void render() = 0;
+        virtual void input(bool wasDown, bool isDown, long keyCode) = 0;
 
         static int test() {return m_Instances;}
 };
