@@ -1,35 +1,46 @@
 #include "..\..\Headers\Geometry\EObject.h"
 #include <iostream>
 
-void EObject::setOrigin(float x, float y)
+void EObject::setOrigin(const float &x, const float &y)
 {
-    m_Origin->x = x;
-    m_Origin->y = y;
+    m_Origin.x = x;
+    m_Origin.y = y;
 
     update();
 }
 void EObject::setOrigin(const P2D_F &src_p2d)
 {
-    *m_Origin = src_p2d;
+    m_Origin = src_p2d;
 
     update();
 }
 void EObject::setOrigin(P2D_F &&src_p2d)
 {
-    *m_Origin = std::move(src_p2d);
+    m_Origin = std::move(src_p2d);
+
+    update();
+}
+void EObject::setX(float val)
+{
+    m_Origin.x+=val;
+
+    update();
+}
+void EObject::setY(float val)
+{
+    m_Origin.y+=val;
 
     update();
 }
 
-void EObject::moveX(float val)
+void EObject::move(float angle = 0.0f, float force = 0.5f)
 {
-    m_Origin->x+=val;
+    #include <math.h>
 
-    update();
-}
-void EObject::moveY(float val)
-{
-    m_Origin->y+=val;
+    angle = angle * (3.1415/180);
+
+    m_Origin.x = m_Origin.x + (cos(angle) * force);
+    m_Origin.y = m_Origin.y + (sin(angle) * force);
 
     update();
 }

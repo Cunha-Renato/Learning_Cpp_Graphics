@@ -15,16 +15,13 @@
 
 Scene01::Scene01() : Scene::Scene() {}
 
-Scene01::~Scene01()
-{
-    m_Rect = nullptr;
-}
+Scene01::~Scene01(){}
 
 void Scene01::init()
 {
     m_Rect.setRect(m_Graphics->getRect()); 
 
-    m_Player.setRect(40.0f, 20.0f, 15.0f, 15.0f);
+    m_Player.setRect(m_Rect.getWidth()/2, m_Rect.getHeight()/2, 15.0f, 15.0f);
 }
 
 void Scene01::update() 
@@ -32,9 +29,9 @@ void Scene01::update()
     if(m_Move)
     {
         if(m_MoveUp)
-            m_Player.moveY(-10);
+            m_Player.move(90, 5);
         else if(!m_MoveUp)
-            m_Player.moveY(10);
+            m_Player.move(270, 5);
 
         if(m_Player.getRect().top <= m_Rect.getRect().top)
             m_Player.setOrigin(m_Player.getXOrigin(), (float)m_Rect.getRect().top);    
@@ -50,27 +47,30 @@ void Scene01::render()
 
     m_Graphics->paintBackground(0.20f, 0.20f, 0.20f);
     m_Graphics->fillRect(m_Player.getRect());
-    m_Graphics->fillEllipse(m_Ball);
+    // m_Graphics->fillEllipse(m_Ball);
 
     m_Graphics->endDraw();
 }
 
 void Scene01::input(bool wasDown, bool isDown, long keyCode)
 {
-    if(isDown)
+
+    if(keyCode == 'W' || keyCode == 'S')
     {
-        if(keyCode == 'W')
+        if(isDown)
         {
-            m_Move = true;
-            m_MoveUp = true;
+            if(keyCode == 'W')
+            {
+                m_Move = true;
+                m_MoveUp = true;
+            }
+            else if(keyCode == 'S')
+            {
+                m_Move = true;
+                m_MoveUp = false;
+            }
         }
-        
-        else if(keyCode == 'S')
-        {
-            m_Move = true;
-            m_MoveUp = false;
-        }
+        else
+            m_Move = false;
     }
-    else
-        m_Move = false;
 }

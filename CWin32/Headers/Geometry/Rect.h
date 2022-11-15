@@ -30,7 +30,7 @@ class Rect : public EObject
 
         Rect& operator=(const Rect &src_rect)
         {
-            *m_Origin = *src_rect.m_Origin;
+            m_Origin = src_rect.m_Origin;
             *m_Rect = *src_rect.m_Rect;
 
             return *this;
@@ -42,7 +42,6 @@ class Rect : public EObject
             m_Origin = std::move(src_rect.m_Origin);
             m_Rect = std::move(src_rect.m_Rect);
 
-            src_rect.m_Origin = nullptr;
             src_rect.m_Rect = nullptr;
 
             return *this;
