@@ -59,6 +59,11 @@ void Graphics::fillRect(const D2D1_RECT_F &rect)
     m_Render_Target->FillRectangle(rect, m_Brush);
 }
 
+void Graphics::fillEllipse(const D2D1_ELLIPSE &ellipse)
+{
+    m_Render_Target->FillEllipse(ellipse, m_Brush);
+}
+
 void Graphics::paintBackground(float r, float g, float b)
 {
     m_Render_Target->Clear(D2D1::ColorF(r, g, b));

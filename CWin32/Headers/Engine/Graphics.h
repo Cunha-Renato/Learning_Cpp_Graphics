@@ -19,10 +19,11 @@ class Graphics
 
         bool init(HWND window_handle);
 
-        RECT* getRect() {return &m_Rect;}
+        RECT getRect() {return m_Rect;}
 
         void drawLine(float x1, float y1, float x2, float y2);
         void fillRect(const D2D1_RECT_F &rect);
+        void fillEllipse(const D2D1_ELLIPSE &ellipse);
         void paintBackground(float r, float g, float b);
         void beginDraw() {m_Render_Target->BeginDraw();}
         void endDraw() {m_Render_Target->EndDraw();}

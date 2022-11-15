@@ -10,9 +10,8 @@
 #define LOGSTR(x)
 #endif
 
-Rect::Rect(const Rect &src_rect) noexcept
+Rect::Rect(const Rect &src_rect) noexcept : EObject()
 {
-    m_Center = src_rect.m_Center;
     m_Width = src_rect.m_Width;
     m_Height = src_rect.m_Height;
 
@@ -22,25 +21,22 @@ Rect::Rect(const Rect &src_rect) noexcept
     LOGSTR("Copied!");
 }
 
-Rect::Rect(Rect &&src_rect)
+Rect::Rect(Rect &&src_rect) : EObject()
 {
-    m_Center = src_rect.m_Center;
     m_Width = src_rect.m_Width;
     m_Height = src_rect.m_Height;
 
     m_Origin = std::move(src_rect.m_Origin);
     m_Rect = std::move(src_rect.m_Rect);
 
-    src_rect.m_Center = 0;
     src_rect.m_Origin = nullptr;
     src_rect.m_Rect = nullptr;
 
     LOGSTR("Created by rvalue!");
 }
 
-Rect::Rect(const D2D1_RECT_F &src_rect)
+Rect::Rect(const D2D1_RECT_F &src_rect) : EObject()
 {
-    m_Center = 0;
     m_Width = abs(src_rect.right - src_rect.left);
     m_Height = abs(src_rect.bottom - src_rect.top);
 
@@ -51,9 +47,8 @@ Rect::Rect(const D2D1_RECT_F &src_rect)
     LOGSTR("Copied RECT!");
 }
 
-Rect::Rect(D2D1_RECT_F *src_rect)
+Rect::Rect(D2D1_RECT_F *src_rect) : EObject()
 {
-    m_Center = 0;
     m_Width = abs(src_rect->right - src_rect->left);
     m_Height = abs(src_rect->bottom - src_rect->top);
 
@@ -67,9 +62,8 @@ Rect::Rect(D2D1_RECT_F *src_rect)
     LOGSTR("Created by pointer RECT!");
 }
 
-Rect::Rect(const D2D1_RECT_F &&src_rect)
+Rect::Rect(const D2D1_RECT_F &&src_rect) : EObject()
 {
-    m_Center = 0;
     m_Width = abs(src_rect.right - src_rect.left);
     m_Height = abs(src_rect.bottom - src_rect.top);
 
@@ -81,9 +75,8 @@ Rect::Rect(const D2D1_RECT_F &&src_rect)
     LOGSTR("Created by RECT rvalue!");
 }
 
-Rect::Rect(float x, float y, float width, float height)
+Rect::Rect(float x, float y, float width, float height) : EObject()
 {
-    m_Center = 0.0f;
     m_Width = width;
     m_Height = height;
     
@@ -98,9 +91,8 @@ Rect::Rect(float x, float y, float width, float height)
     LOGSTR("Created!");
 }
 
-Rect::Rect(const P2D_F &src_p2d, float width, float height)
+Rect::Rect(const P2D_F &src_p2d, float width, float height) : EObject()
 {
-    m_Center = 0;
     m_Width = width;
     m_Height = height;
 
@@ -112,9 +104,8 @@ Rect::Rect(const P2D_F &src_p2d, float width, float height)
     m_Rect->bottom = (height + m_Rect->right);
 }
 
-Rect::Rect(const P2D_F &&src_p2d, float width, float height)
+Rect::Rect(const P2D_F &&src_p2d, float width, float height) : EObject()
 {
-    m_Center = 0;
     m_Width = width;
     m_Height = height;
 
@@ -137,29 +128,9 @@ Rect::~Rect()
 }
 
 //Seters
-void Rect::setOrigin(float x, float y)
-{
-    m_Origin->x = x;
-    m_Origin->y = y;
-
-    update();
-}
-void Rect::setOrigin(const P2D_F &src_p2d)
-{
-    *m_Origin = src_p2d;
-
-    update();
-}
-void Rect::setOrigin(P2D_F &&src_p2d)
-{
-    *m_Origin = std::move(src_p2d);
-
-    update();
-}
 
 void Rect::setRect(float x, float y, float width, float height)
 {
-    m_Center = 0.0f;
     m_Width = width;
     m_Height = height;
     
@@ -172,24 +143,24 @@ void Rect::setRect(float x, float y, float width, float height)
     m_Rect->bottom = (height + y);
 }
 
+void Rect::setRect(const RECT &src_rect)
+{
+    m_Origin->x = (float)src_rect.left;
+    m_Origin->y = (float)src_rect.top;
+
+    m_Rect->left = (float)src_rect.left;
+    m_Rect->top = (float)src_rect.top;
+    m_Rect->right = (float)src_rect.right;
+    m_Rect->bottom = (float)src_rect.bottom;
+
+    m_Height = abs(m_Rect->bottom - m_Rect->top);
+    m_Height = abs(m_Rect->right - m_Rect->left);
+}
+
 void Rect::update()
 {
-    //TODO: update the center.
     m_Rect->left = m_Origin->x;
     m_Rect->top = m_Origin->y;
     m_Rect->right = (m_Rect->left + m_Width);
     m_Rect->bottom = (m_Rect->top + m_Height);
-}
-
-void Rect::moveX(float val)
-{
-    m_Origin->x+=val;
-
-    update();
-}
-void Rect::moveY(float val)
-{
-    m_Origin->y+=val;
-
-    update();
 }

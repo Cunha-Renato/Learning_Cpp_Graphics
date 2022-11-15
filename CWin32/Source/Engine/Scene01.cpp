@@ -22,9 +22,9 @@ Scene01::~Scene01()
 
 void Scene01::init()
 {
-    m_Rect = m_Graphics->getRect(); 
+    m_Rect.setRect(m_Graphics->getRect()); 
 
-    m_Player.setRect(40.0f, 20.0f, 15.0f, 120.0f);
+    m_Player.setRect(40.0f, 20.0f, 15.0f, 15.0f);
 }
 
 void Scene01::update() 
@@ -36,10 +36,11 @@ void Scene01::update()
         else if(!m_MoveUp)
             m_Player.moveY(10);
 
-        if(m_Player.getRect().top <= m_Rect->top)
-            m_Player.setOrigin(m_Player.getXOrigin(), (float)m_Rect->top);    
-        else if(m_Player.getRect().bottom >= m_Rect->bottom)
-            m_Player.setOrigin(m_Player.getXOrigin(), m_Rect->bottom-m_Player.getHeight());
+        if(m_Player.getRect().top <= m_Rect.getRect().top)
+            m_Player.setOrigin(m_Player.getXOrigin(), (float)m_Rect.getRect().top);    
+            
+        else if(m_Player.getRect().bottom >= m_Rect.getRect().bottom)
+            m_Player.setOrigin(m_Player.getXOrigin(), m_Rect.getRect().bottom - m_Player.getHeight());
     }
 }
 
@@ -49,6 +50,7 @@ void Scene01::render()
 
     m_Graphics->paintBackground(0.20f, 0.20f, 0.20f);
     m_Graphics->fillRect(m_Player.getRect());
+    m_Graphics->fillEllipse(m_Ball);
 
     m_Graphics->endDraw();
 }
