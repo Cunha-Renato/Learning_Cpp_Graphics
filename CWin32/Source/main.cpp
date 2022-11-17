@@ -15,9 +15,3 @@ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE prev_instance, LPSTR cmd_line
 
     return 0;
 }
-
-// int main()
-// {
-
-//     return 0;
-// }

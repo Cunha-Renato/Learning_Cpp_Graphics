@@ -8,10 +8,12 @@ class Scene01 : public Scene
     private:
         bool m_Move = false;
         bool m_MoveUp = false;
-        float m_Angle = 0;
+        float m_Angle = 100;
         Rect m_Rect;
         Rect m_Player;
-        D2D1_ELLIPSE m_Ball = {0};
+        EEllipse m_Ball;
+
+        void ballColision();
 
     public:
         Scene01();

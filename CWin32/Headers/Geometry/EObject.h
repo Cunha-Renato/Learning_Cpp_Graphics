@@ -7,8 +7,8 @@
 class EObject
 {
     protected:
-        bool m_Solid = false;
-        float m_Center = 0;
+        bool m_Solid = false; //TODO: Implement
+        float m_Center = 0; //TODO: Implement
         P2D_F m_Origin;
 
         virtual void update() = 0;

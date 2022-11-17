@@ -20,8 +20,21 @@ Scene01::~Scene01(){}
 void Scene01::init()
 {
     m_Rect.setRect(m_Graphics->getRect()); 
+    m_Player.setRect(20, 0, 15.0f, 120.0f);
 
-    m_Player.setRect(m_Rect.getWidth()/2, m_Rect.getHeight()/2, 15.0f, 15.0f);
+    m_Ball.setEEllipse(m_Rect.getWidth()/2, m_Rect.getHeight()/2, 15, 15);
+}
+
+void Scene01::ballColision()
+{
+    float ballX = m_Ball.getOrigin().x;
+    float ballY = m_Ball.getOrigin().y;
+
+    if(ballY + m_Ball.getEllipse().radiusY >= m_Rect.getHeight() || ballY - m_Ball.getEllipse().radiusY <= m_Rect.getOrigin().y)
+        m_Angle = 360 - m_Angle; 
+    
+    else if(ballX - m_Ball.getEllipse().radiusX <= m_Rect.getOrigin().x || ballX + m_Ball.getEllipse().radiusX >= m_Rect.getWidth())
+        m_Angle = 180 - m_Angle;
 }
 
 void Scene01::update() 
@@ -34,11 +47,15 @@ void Scene01::update()
             m_Player.move(270, 5);
 
         if(m_Player.getRect().top <= m_Rect.getRect().top)
-            m_Player.setOrigin(m_Player.getXOrigin(), (float)m_Rect.getRect().top);    
+            m_Player.setOrigin(m_Player.getXOrigin(), m_Rect.getRect().top);    
             
         else if(m_Player.getRect().bottom >= m_Rect.getRect().bottom)
             m_Player.setOrigin(m_Player.getXOrigin(), m_Rect.getRect().bottom - m_Player.getHeight());
     }
+
+    m_Ball.move(m_Angle, 5);
+
+    ballColision();
 }
 
 void Scene01::render() 
@@ -47,7 +64,7 @@ void Scene01::render()
 
     m_Graphics->paintBackground(0.20f, 0.20f, 0.20f);
     m_Graphics->fillRect(m_Player.getRect());
-    // m_Graphics->fillEllipse(m_Ball);
+    m_Graphics->fillEllipse(m_Ball.getEllipse());
 
     m_Graphics->endDraw();
 }

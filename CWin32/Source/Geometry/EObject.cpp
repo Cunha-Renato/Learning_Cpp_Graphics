@@ -37,10 +37,22 @@ void EObject::move(float angle = 0.0f, float force = 0.5f)
 {
     #include <math.h>
 
-    angle = angle * (3.1415/180);
+    float pi = 3.1415926f;
+
+    if(angle == 90)
+        angle = pi/2.0f;
+
+    else if(angle == 180)
+        angle = pi;
+    
+    else if(angle == 270)
+        angle = (3.0f*pi)/2.0f;
+
+    else
+        angle = (float)(angle * (pi/180.0f));
 
     m_Origin.x = m_Origin.x + (cos(angle) * force);
-    m_Origin.y = m_Origin.y + (sin(angle) * force);
+    m_Origin.y = m_Origin.y - (sin(angle) * force);
 
     update();
 }
