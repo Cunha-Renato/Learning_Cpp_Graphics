@@ -22,7 +22,7 @@ class Window
         static LRESULT CALLBACK windowProc(HWND window, UINT message, WPARAM wParam, LPARAM lParam);
 
     public:
-        Window(HINSTANCE instance, LPCWSTR class_name, LPCWSTR title);
+        Window(LPCWSTR class_name, LPCWSTR title);
         ~Window() {};
 
         //Sets the active scene to the given scene.

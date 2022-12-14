@@ -17,13 +17,13 @@ LPCWSTR Window::m_Name = {0};
 LPCWSTR Window::m_Title = {0};
 Scene* Window::m_Scene = nullptr;
 
-Window::Window(HINSTANCE instance, LPCWSTR class_name, LPCWSTR title) 
+Window::Window(LPCWSTR class_name, LPCWSTR title) 
 {
     // LOGSTR("Constructor!");
     m_Name = class_name;
     m_Title = title;
-    m_Instance = instance;
-
+    m_Instance = GetModuleHandleW(0);
+    
     createWindowObj();
 
     if(RegisterClassW(&m_Window_Class))
