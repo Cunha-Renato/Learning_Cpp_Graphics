@@ -16,6 +16,7 @@ HINSTANCE Window::m_Instance = nullptr;
 LPCWSTR Window::m_Name = {0};
 LPCWSTR Window::m_Title = {0};
 Scene* Window::m_Scene = nullptr;
+Graphics* Window::m_Window_Graphics = nullptr;
 
 Window::Window(LPCWSTR class_name, LPCWSTR title) 
 {
@@ -28,7 +29,8 @@ Window::Window(LPCWSTR class_name, LPCWSTR title)
 
     if(RegisterClassW(&m_Window_Class))
         regWindow();
-    
+
+    m_Window_Graphics = new Graphics(m_Window_Handle);
 }
 //
 //Private functions
@@ -142,10 +144,7 @@ void Window::MainLoop()
 void Window::setActiveScene(Scene *scn)
 {
     m_Scene = scn;
-    
-    if(!m_Scene->hasGraphics())
-        m_Scene->setGraphics(new Graphics(m_Window_Handle));
-    
+    m_Scene->setGraphics(m_Window_Graphics);
     m_Scene->init();
 }
 

@@ -17,8 +17,10 @@ class EEllipse : public EObject
         ~EEllipse() {}
 
         //Seters
-
         void setEEllipse(float x, float y, float radiusX, float radiusY);
 
+        //Geters
         D2D1_ELLIPSE getEllipse() {return m_Ellipse;}
+
+        void draw(Graphics *gfx);
 };

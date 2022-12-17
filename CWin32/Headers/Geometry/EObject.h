@@ -3,6 +3,7 @@
 #include <d2d1.h>
 #include <iostream>
 #include "P2D_F.h"
+#include "..\Engine\Graphics.h"
 
 class EObject
 {
@@ -16,16 +17,20 @@ class EObject
     public:
         virtual ~EObject(){};
 
+        //Seters
         virtual void setOrigin(const float &x, const float &y);
         virtual void setOrigin(const P2D_F &src_p2d);
         virtual void setOrigin(P2D_F &&src_p2d);
         virtual void setX(float val);
         virtual void setY(float val);
 
+        //Getters
         P2D_F getOrigin() {return m_Origin;}
         float getXOrigin() {return m_Origin.x;}
         float getYOrigin() {return m_Origin.y;}
 
         //Angle in degrees
         void move(float angle, float force);
+
+        virtual void draw(Graphics *gfx) = 0;
 };

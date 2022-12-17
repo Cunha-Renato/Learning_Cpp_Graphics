@@ -1,3 +1,4 @@
 #pragma once
 
-#include "Scene01.h"
+#include "Scene.h"
+#include "Pong.h"

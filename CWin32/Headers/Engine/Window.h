@@ -14,6 +14,7 @@ class Window
         static LPCWSTR m_Name;
         static LPCWSTR m_Title;
         static Scene *m_Scene;
+        static Graphics *m_Window_Graphics;
 
         //Private Functions
         static void createWindowObj();

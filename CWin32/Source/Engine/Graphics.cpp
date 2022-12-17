@@ -1,22 +1,10 @@
 #include "..\..\Headers\Engine\Graphics.h"
 #include "d2d1.h"
 
-Graphics::Graphics(HWND window_handle) {init(window_handle);}
-
-Graphics::~Graphics()
-{
-    if(m_Factory) m_Factory->Release();
-    if(m_Render_Target) m_Render_Target->Release();
-    if(m_Brush) m_Brush->Release();
-}
-
-bool Graphics::init(HWND window_handle)
+Graphics::Graphics(HWND window_handle)
 {
     //Creates a factory in single thread mode
     HRESULT res = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_Factory);
-
-    //If the previous operation was a failure
-    if(res != S_OK) return false;
 
     //Gets the dimensions of the window client
     GetClientRect(window_handle, &m_Rect);
@@ -33,20 +21,18 @@ bool Graphics::init(HWND window_handle)
         &m_Render_Target
     );
 
-    //If the previous operation was a failure
-    if(res != S_OK) return false;
-
     res = m_Render_Target->CreateSolidColorBrush
     (
         D2D1::ColorF(1.0f, 1.0f, 1.0f, 1.0f),
         &m_Brush
     );
+}
 
-    //If the previous operation was a failure
-    if(res != S_OK) return false;
-
-    //If everything worked then return true
-    return true;
+Graphics::~Graphics()
+{
+    if(m_Factory) m_Factory->Release();
+    if(m_Render_Target) m_Render_Target->Release();
+    if(m_Brush) m_Brush->Release();
 }
 
 void Graphics::drawLine(float x1, float y1, float x2, float y2)
@@ -54,12 +40,12 @@ void Graphics::drawLine(float x1, float y1, float x2, float y2)
     m_Render_Target->DrawLine(D2D1::Point2F(x1, y1), D2D1::Point2F(x2, y2), m_Brush);
 }
 
-void Graphics::fillRect(const D2D1_RECT_F &rect)
+void Graphics::fillRect(const D2D1_RECT_F *const rect)
 {
     m_Render_Target->FillRectangle(rect, m_Brush);
 }
 
-void Graphics::fillEllipse(const D2D1_ELLIPSE &ellipse)
+void Graphics::fillEllipse(const D2D1_ELLIPSE *const ellipse)
 {
     m_Render_Target->FillEllipse(ellipse, m_Brush);
 }

@@ -1,4 +1,5 @@
 #include "..\..\Headers\Geometry\EEllipse.h"
+#include "..\..\Headers\Engine\Graphics.h"
 
 EEllipse::EEllipse(float x, float y, float radiusX, float radiusY)
 {
@@ -44,4 +45,9 @@ void EEllipse::update()
 {
     m_Ellipse.point.x = m_Origin.x;
     m_Ellipse.point.y = m_Origin.y;
+}
+
+void EEllipse::draw(Graphics *gfx)
+{
+    gfx->fillEllipse(&this->m_Ellipse);
 }

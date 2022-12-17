@@ -52,7 +52,10 @@ class Rect : public EObject
         void setRect(float x, float y, float width, float height);
         void setRect(const RECT &src_rect);
 
+        //Geters
         float getHeight() {return m_Height;}
         float getWidth() {return m_Width;}
         const D2D1_RECT_F getRect() {return *m_Rect;}
+
+        void draw(Graphics *gfx);
 };

@@ -8,7 +8,7 @@ int main()
 {
     Window window(L"Window", L"WindowTitle");
 
-    Scene01 s;
+    Pong s;
     window.setActiveScene(&s);
 
     window.run();
