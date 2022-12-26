@@ -167,3 +167,11 @@ void Rect::draw(Graphics *gfx)
 {
     gfx->fillRect(this->m_Rect);
 }
+
+bool Rect::colided(P2D_F point)
+{
+    if(this->m_Origin.y <= point.y && (this->m_Origin.y + this->m_Height) >= point.y && this->m_Origin.x <= point.x && (this->m_Origin.x + this->m_Width) >= point.x)
+        return true;
+
+    return false;
+}

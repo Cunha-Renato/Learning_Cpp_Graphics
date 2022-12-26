@@ -58,4 +58,6 @@ class Rect : public EObject
         const D2D1_RECT_F getRect() {return *m_Rect;}
 
         void draw(Graphics *gfx);
+
+        bool colided(P2D_F point);
 };

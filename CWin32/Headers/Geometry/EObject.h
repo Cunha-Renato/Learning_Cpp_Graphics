@@ -33,4 +33,5 @@ class EObject
         void move(float angle, float force);
 
         virtual void draw(Graphics *gfx) = 0;
+        virtual bool colided(P2D_F point) = 0; //TODO: Use this to transfer the correct angle for the bouncing;
 };

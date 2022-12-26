@@ -20,7 +20,10 @@ class EEllipse : public EObject
         void setEEllipse(float x, float y, float radiusX, float radiusY);
 
         //Geters
+        float getRadius() {return m_Ellipse.radiusX;}
         D2D1_ELLIPSE getEllipse() {return m_Ellipse;}
 
         void draw(Graphics *gfx);
+
+        bool colided(P2D_F point) {return false;}
 };

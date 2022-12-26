@@ -8,7 +8,9 @@ class Pong : public Scene
     private:
         bool m_Move = false;
         bool m_MoveUp = false;
-        float m_Angle = 100;
+        float m_Speed_X = 10;
+        float m_Speed_Y = 10;
+        float m_Player_Speed = 10;
         Rect m_Canvas;
         Rect m_Player;
         EEllipse m_Ball;
