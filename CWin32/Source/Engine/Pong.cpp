@@ -20,7 +20,8 @@ Pong::~Pong(){}
 void Pong::init()
 {
     m_Canvas.setRect(m_Graphics->getRect()); 
-    m_Player.setRect(60, (m_Canvas.getHeight()/2 - 60.0f), 15.0f, 120.0f);
+    m_Player[0].setRect(60, (m_Canvas.getHeight()/2 - 60.0f), 15.0f, 120.0f);
+    m_Player[1].setRect((m_Canvas.getWidth() - 60), (m_Canvas.getHeight()/2 - 60.0f), 15.0f, 120.0f);
 
     m_Ball.setEEllipse(m_Canvas.getWidth()/2, m_Canvas.getHeight()/2, 15, 15);
     m_Speed_X = 10;
@@ -45,29 +46,36 @@ void Pong::ballColision()
     }
 
     P2D_F point(m_Ball.getXOrigin() - m_Ball.getRadius(), m_Ball.getYOrigin() - m_Ball.getRadius()); 
-    
-    if(m_Player.colided(point))
+    if(m_Player[0].colided(point))
+        m_Speed_X *= -1;
+
+    point.setPoint(m_Ball.getXOrigin() + m_Ball.getRadius(), m_Ball.getYOrigin() - m_Ball.getRadius()); 
+    if(m_Player[1].colided(point))
         m_Speed_X *= -1;
 }
 
 void Pong::update() 
 {
-    if(m_Move)
+    for(int i=0; i<2; i++)
     {
-        if(m_MoveUp)
-            m_Player.move(90, m_Player_Speed);
-        else if(!m_MoveUp)
-            m_Player.move(270, m_Player_Speed);
+        if(m_Move[i])
+        {
+            if(m_MoveUp[i])
+                m_Player[i].move(90, m_Player_Speed[i]);
+            else if(!m_MoveUp[i])
+                m_Player[i].move(270, m_Player_Speed[i]);
 
-        if(m_Player.getRect().top <= m_Canvas.getRect().top)
-            m_Player.setOrigin(m_Player.getXOrigin(), m_Canvas.getRect().top);    
-            
-        else if(m_Player.getRect().bottom >= m_Canvas.getRect().bottom)
-            m_Player.setOrigin(m_Player.getXOrigin(), m_Canvas.getRect().bottom - m_Player.getHeight());
+            if(m_Player[i].getRect().top <= m_Canvas.getRect().top)
+                m_Player[i].setOrigin(m_Player[i].getXOrigin(), m_Canvas.getRect().top);    
+                
+            else if(m_Player[i].getRect().bottom >= m_Canvas.getRect().bottom)
+                m_Player[i].setOrigin(m_Player[i].getXOrigin(), m_Canvas.getRect().bottom - m_Player[i].getHeight());
+
+            // LOGSTR(m_Move[i]);
+        }
     }
 
     m_Ball.setOrigin(m_Ball.getXOrigin() - m_Speed_X, m_Ball.getYOrigin() + m_Speed_Y);
-
     ballColision();
 }
 
@@ -76,7 +84,8 @@ void Pong::render()
     m_Graphics->beginDraw();
 
     m_Graphics->paintBackground(0.20f, 0.20f, 0.20f);
-    m_Player.draw(m_Graphics);
+    m_Player[0].draw(m_Graphics);
+    m_Player[1].draw(m_Graphics);
     m_Ball.draw(m_Graphics);
 
     m_Graphics->endDraw();
@@ -84,28 +93,53 @@ void Pong::render()
 
 void Pong::input(bool wasDown, bool isDown, long keyCode)
 {
-    if(keyCode == 'W' || keyCode == 'S' || keyCode == VK_SPACE)
+    if(keyCode == 'W' || keyCode == 'S' || keyCode == VK_UP || keyCode == VK_DOWN || keyCode == VK_RIGHT || keyCode == VK_SPACE)
     {
         if(isDown)
         {
             if(keyCode == 'W')
             {
-                m_Move = true;
-                m_MoveUp = true;
+                m_Move[0] = true;
+                m_MoveUp[0] = true;
             }
             else if(keyCode == 'S')
             {
-                m_Move = true;
-                m_MoveUp = false;
+                m_Move[0] = true;
+                m_MoveUp[0] = false;
+            }
+
+            if(keyCode == VK_UP)
+            {
+                m_Move[1] = true;
+                m_MoveUp[1] = true;
+
+                LOGSTR("UP pressed");
+            }
+            else if(keyCode == VK_DOWN)
+            {
+                m_Move[1] = true;
+                m_MoveUp[1] = false;
             }
 
             if(keyCode == VK_SPACE)
-                m_Player_Speed = 20;
-        }
-        else if(keyCode != VK_SPACE)
-            m_Move = false;
+                m_Player_Speed[0] = 20;
 
+            if(keyCode == VK_RIGHT)
+                m_Player_Speed[1] = 20;
+        }
+        else if(keyCode != VK_SPACE && keyCode != VK_RIGHT)
+        {
+            if(keyCode == 'W' || keyCode == 'S')
+                m_Move[0] = false;
+                
+            else m_Move[1] = false;
+        }
         else
-            m_Player_Speed = 10;
+        {
+            if(keyCode == VK_SPACE)
+                m_Player_Speed[0] = 10;
+    
+            else m_Player_Speed[1] = 10;
+        }
     }
 }
