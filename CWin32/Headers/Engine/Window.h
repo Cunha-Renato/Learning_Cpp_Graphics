@@ -2,7 +2,8 @@
 
 #include <windows.h>
 #include "Graphics.h"
-#include "Scenes.h"
+
+class Scene;
 
 class Window
 {

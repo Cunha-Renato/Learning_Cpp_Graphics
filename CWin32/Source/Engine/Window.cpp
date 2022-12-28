@@ -1,4 +1,5 @@
 #include "..\..\Headers\Engine\Window.h"
+#include "..\..\Headers\Engine\Scenes.h"
 
 #define DEBUG 1
 #if DEBUG == 1
