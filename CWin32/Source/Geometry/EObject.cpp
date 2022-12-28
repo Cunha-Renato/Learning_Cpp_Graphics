@@ -22,13 +22,13 @@ void EObject::setOrigin(P2D_F &&src_p2d)
 }
 void EObject::setX(float val)
 {
-    m_Origin.x+=val;
+    m_Origin.x=val;
 
     update();
 }
 void EObject::setY(float val)
 {
-    m_Origin.y+=val;
+    m_Origin.y=val;
 
     update();
 }

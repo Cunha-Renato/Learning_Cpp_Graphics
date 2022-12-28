@@ -23,6 +23,7 @@ class Graphics
 
         void drawLine(float x1, float y1, float x2, float y2);
         void fillRect(const D2D1_RECT_F *const rect);
+        void fillRect(const D2D1_RECT_F &&rect);
         void fillEllipse(const D2D1_ELLIPSE *const ellipse);
         void paintBackground(float r, float g, float b);
         void beginDraw() {m_Render_Target->BeginDraw();}
