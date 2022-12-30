@@ -2,3 +2,4 @@
 
 #include "Scene.h"
 #include "Pong.h"
+#include "EndScene.h"

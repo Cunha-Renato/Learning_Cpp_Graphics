@@ -1,5 +1,5 @@
 #include "..\..\Headers\Engine\Window.h"
-#include "..\..\Headers\Engine\Scenes.h"
+#include "..\..\Headers\Engine\SceneManager.h"
 
 #define DEBUG 1
 #if DEBUG == 1
@@ -16,7 +16,7 @@ HWND Window::m_Window_Handle = nullptr;
 HINSTANCE Window::m_Instance = nullptr;
 LPCWSTR Window::m_Name = {0};
 LPCWSTR Window::m_Title = {0};
-Scene* Window::m_Scene = nullptr;
+SceneManager Window::m_SM;
 Graphics* Window::m_Window_Graphics = nullptr;
 
 Window::Window(LPCWSTR class_name, LPCWSTR title) 
@@ -51,7 +51,7 @@ LRESULT CALLBACK Window::windowProc(HWND window, UINT message, WPARAM wParam, LP
             bool wasDown = ((lParam & (1<<30)) != 0);
             bool isDown = ((lParam & (1<<31)) == 0);
 
-            m_Scene->input(wasDown, isDown, vkCode);
+            m_SM.runInput(wasDown, isDown, vkCode);
             
             break;
         }
@@ -131,23 +131,12 @@ void Window::MainLoop()
         else
         {
             //Main Loop
-            //Update
-            m_Scene->update();
-
-            // //Render
-            m_Scene->render();
+            m_SM.runScene();
         }
     }
 }
 
 //Public functions
-
-void Window::setActiveScene(Scene *scn)
-{
-    m_Scene = scn;
-    m_Scene->setGraphics(m_Window_Graphics);
-    m_Scene->init();
-}
 
 void Window::run()
 {

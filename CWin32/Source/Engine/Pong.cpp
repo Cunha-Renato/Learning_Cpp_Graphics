@@ -1,7 +1,7 @@
 #include "..\..\Headers\Engine\Pong.h"
 
 
-#define DEBUG 1
+#define DEBUG 0
 #if DEBUG == 1
 
 #include <iostream>
@@ -109,7 +109,14 @@ void Pong::update()
     m_Ball.setOrigin(m_Ball.getXOrigin() - m_Speed_X, m_Ball.getYOrigin() + m_Speed_Y);
     ballColision();
 
-    std::cout << m_Score_Points[0] << " - " << m_Score_Points[1] << std::endl;
+    // std::cout << m_Score_Points[0] << " - " << m_Score_Points[1] << std::endl;
+
+    for(int i=0; i<2; i++)
+        if(m_Score_Points[i] >= 10) 
+        {
+            m_SM->setActiveScene(1);
+            break;
+        }
 }
 
 void Pong::render() 

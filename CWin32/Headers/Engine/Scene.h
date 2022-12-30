@@ -3,10 +3,12 @@
 #include "Graphics.h"
 
 class window;
+class SceneManager;
 
 class Scene
 {
     protected:
+        static SceneManager *m_SM;
         static Window *m_Window;
         static Graphics *m_Graphics;
 
@@ -14,6 +16,7 @@ class Scene
         virtual ~Scene(){};
         static void setGraphics(Graphics *gfx);
         static void setWindow(Window *window);
+        static void setSceneManager(SceneManager *sm);
 
         virtual void init() = 0;
         virtual void update() = 0;

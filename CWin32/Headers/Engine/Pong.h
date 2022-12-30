@@ -21,6 +21,7 @@ class Pong : public Scene
     public:
         Pong();
         ~Pong();
+        int* getScores() {return m_Score_Points;}
         void init();
         void update();
         void render();
