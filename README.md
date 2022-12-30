@@ -9,6 +9,6 @@ First create a Window variable, the a SceneManager variable and assign the windo
 
 For now i doubt that anyone will be able to use it because somethings are hidden and hard to understand (especially without comments). I'll be making the game PONG using this library and upload on github.
   
-# Libraries
-user32.lib, 
-d2d1.lib
+# Requirements
+
+Compile using the MSVC and use the (user32.lib) and (d2d1.lib).
