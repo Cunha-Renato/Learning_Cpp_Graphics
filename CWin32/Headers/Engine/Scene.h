@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Graphics.h"
+#include "SceneManager.h"
 
 class window;
-class SceneManager;
 
 class Scene
 {
